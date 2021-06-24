@@ -1,0 +1,19 @@
+.container {
+  height: 170px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "_none contact contact"
+    "logo copyright copyright";
+}
+
+.contact { grid-area: contact; margin-top: 20px; }
+
+.copyright { grid-area: copyright; margin-top: 20px; }
+
+.logo { grid-area: logo; margin-top: 20px;}
+
+._none { grid-area: _none; margin-top: 20px; }
