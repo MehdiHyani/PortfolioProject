@@ -360,7 +360,7 @@ export default function CreatePortfolio() {
                     }}
                   />
                   <TextField
-                    inputProps={{ maxLength: 390 }}
+                    inputProps={{ maxLength: 1000, minLength: 600 }}
                     variant="outlined"
                     name="Bio"
                     label="Bio"
