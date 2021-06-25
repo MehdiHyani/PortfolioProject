@@ -69,7 +69,7 @@ const Error = () => {
         </div>
       </div>
       <h1 className="second-four">4</h1>
-      <p className="wrong-para">Uh Oh! Page not found!</p>
+      <h2 className="wrong-para">Uh Oh! Page not found!</h2>
     </div>
   );
 };

@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import React from "react";
 import "./App.css";
 import Home from "./Home";
-import About from "./About";
-import Redirect from "./Redirect";
 import Error from "./Error";
 
 function App() {
@@ -11,9 +9,15 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/" component={Redirect} />
+          <Route exact path="/" component={Error} />
           <Route path="/view/:id" component={Home} />
-          <Route exact path="/about" component={About} />
+          <Route
+            exact
+            path="/about"
+            render={() => {
+              window.location.href = "About.html";
+            }}
+          />
           <Route exact path="*" component={Error} />
           <Route exact path="/error" component={Error} />
         </Switch>

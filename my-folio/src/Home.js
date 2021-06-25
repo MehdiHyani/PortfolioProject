@@ -22,6 +22,8 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/styles";
 
+const sanitize = require("mongo-sanitize");
+
 const axios = require("axios");
 
 const Home = () => {
@@ -111,29 +113,21 @@ const Home = () => {
           // eslint-disable-next-line no-lone-blocks
           {
             window.screen.width > 577
-              ? gsap.from(
-                  `.project${index + 1}`,
-                  // {
-                  //   scrollTrigger: {
-                  //     trigger: `.project${index + 1}`,
-                  //     scrub: true,
-                  //   },
-                  //   duration: 1,
-                  //   opacity: 0,
-                  // },
-                  {
-                    scrollTrigger: {
-                      trigger: `.projects${index + 1}`,
-                      start: "top bottom",
-                      pin: true,
-                      scrub: true,
-                    },
-                    opacity: 0,
-                  }
-                )
+              ? gsap.from(`.project${index + 1}`, {
+                  scrollTrigger: {
+                    trigger: `.project${index + 1}`,
+                    start: "top bottom",
+                    toggleActions: "play reset play reset",
+                  },
+                  duration: 2,
+                  x: __x,
+                  opacity: 0,
+                })
               : gsap.from(`.project${index + 1}`, {
                   scrollTrigger: {
                     trigger: `.project${index + 1}`,
+
+                    toggleActions: "play reset play reset",
                   },
                   duration: 1,
                   opacity: 0,
@@ -210,13 +204,19 @@ const Home = () => {
             });
           }
         }
+        gsap.to(".drawer_two", {
+          scrollTrigger: {
+            trigger: ".container_two",
+            start: "top center",
+            end: "bottom center",
+          },
+          backgroundColor: "#247BA0",
+        });
       } catch (error) {
-        //window.location.href = "/error";
+        window.location.href = "/error";
       }
     }
     fetchData();
-    window.addEventListener("DOMContentLoaded", (event) => {});
-    // eslint-disable-next-line
   }, []);
 
   const override = css`
@@ -254,10 +254,7 @@ const Home = () => {
           />
         </div>
       ) : (
-        <div
-          className="HomeContainer"
-          style={{ display: "flex", backgroundColor: "#2B2D42" }}
-        >
+        <div className="HomeContainer" style={{ display: "flex" }}>
           <div
             className="home"
             style={window.screen.width > 577 ? { maxWidth: "100%" } : {}}
@@ -271,23 +268,40 @@ const Home = () => {
                         ? {
                             textAlign: "center",
                             color: "white",
-                            fontSize: "5.5vh",
+                            fontSize: "5vw",
                             fontFamily: "Josefin Sans, sans-serif",
-                            lineHeight: "110%",
                           }
                         : {
                             textAlign: "center",
                             color: "white",
-                            fontSize: "5.5vw",
+                            fontSize: "5vw",
                             fontFamily: "Josefin Sans, sans-serif",
                             lineHeight: "1.05",
                           }
                     }
                   >
-                    Welcome to
-                    <br />
-                    {data.fullName}'s Portfolio
+                    Welcome To
                   </h1>
+                  <h2
+                    style={
+                      window.screen.width > 577
+                        ? {
+                            textAlign: "center",
+                            color: "white",
+                            fontSize: "5vw",
+                            fontFamily: "Josefin Sans, sans-serif",
+                          }
+                        : {
+                            textAlign: "center",
+                            color: "white",
+                            fontSize: "5vw",
+                            fontFamily: "Josefin Sans, sans-serif",
+                            lineHeight: "1.05",
+                          }
+                    }
+                  >
+                    {data.fullName}'s Portfolio
+                  </h2>
                 </div>
                 <div id="image_div" className="image">
                   {pic ? (
@@ -316,15 +330,15 @@ const Home = () => {
                     style={
                       window.screen.width > 577
                         ? {
-                            color: "whitesmoke",
-                            fontSize: "4vh",
+                            color: "grey",
+                            fontSize: "2vw",
                             textAlign: "right",
                           }
                         : {
                             textAlign: "right",
                             marginTop: "5vh",
                             marginRight: "10vw",
-                            color: "whitesmoke",
+                            color: "grey",
                             fontSize: "4vw",
                           }
                     }
@@ -337,13 +351,13 @@ const Home = () => {
                       window.screen.width > 577
                         ? {
                             fontFamily: "Source Code Pro, monospace",
-                            color: "whitesmoke",
-                            fontSize: "2vh",
+                            color: "white",
+                            fontSize: "1.5vw",
                           }
                         : {
                             margin: "auto",
                             fontFamily: "Source Code Pro, monospace",
-                            color: "whitesmoke",
+                            color: "white",
                             fontSize: "3.5vw",
                           }
                     }
@@ -409,7 +423,7 @@ const Home = () => {
                                   justifyContent: "center",
                                   background: "none",
                                   border: "2px solid black",
-                                  borderColor: "yellow",
+                                  borderColor: "white",
                                   borderRadius: "20px",
                                 }
                           }
@@ -441,6 +455,27 @@ const Home = () => {
             </section>
             <section id="section3">
               <div className="third_container">
+                <video
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
+                  poster="polina.jpg"
+                  id="bgvid"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    zIndex: -1,
+                  }}
+                >
+                  <source
+                    src="../src/resources/backg_vid.mp4"
+                    type="video/mp4"
+                  />
+                </video>
                 <div className="title3">
                   <h5
                     style={
@@ -608,66 +643,60 @@ const Home = () => {
               anchor="right"
             >
               <div
+                onClick={() => {
+                  window.location.href = "#about";
+                  gsap.to(window, {
+                    scrollTo: ".first_container",
+                    duration: 2,
+                  });
+                }}
                 className="rotate drawer_one"
                 style={{
+                  cursor: "pointer",
                   color: "white",
                   backgroundColor: "#2B2D42",
                   height: "30%",
                 }}
               >
-                <a
-                  href="#about"
-                  onClick={() => {
-                    gsap.to(window, {
-                      scrollTo: ".first_container",
-                      duration: 2,
-                    });
-                  }}
-                >
-                  <h3 className="progress animate_1">About me</h3>
-                </a>
+                <h3 className="progress animate_1">About me</h3>
               </div>
 
               <div
+                onClick={() => {
+                  window.location.href = "#myprojects";
+                  gsap.to(window, {
+                    scrollTo: ".second_container",
+                    duration: 2,
+                  });
+                }}
                 className="rotate drawer_two"
                 style={{
+                  cursor: "pointer",
                   height: "auto",
                   color: "white",
                   backgroundColor: "#2B2D42",
                 }}
               >
-                <a
-                  href="#myprojects"
-                  onClick={() => {
-                    gsap.to(window, {
-                      scrollTo: ".second_container",
-                      duration: 2,
-                    });
-                  }}
-                >
-                  <h3 className="progress animate_2">Projects</h3>
-                </a>
+                <h3 className="progress animate_2">Projects</h3>
               </div>
 
               <div
+                onClick={() => {
+                  window.location.href = "#contact";
+                  gsap.to(window, {
+                    scrollTo: ".third_container",
+                    duration: 2,
+                  });
+                }}
                 className="rotate drawer_three"
                 style={{
+                  cursor: "pointer",
                   color: "white",
                   backgroundColor: "#2B2D42",
                   height: "30%",
                 }}
               >
-                <a
-                  href="#contact"
-                  onClick={() => {
-                    gsap.to(window, {
-                      scrollTo: ".third_container",
-                      duration: 2,
-                    });
-                  }}
-                >
-                  <h3 className="progress animate_3">Contact me</h3>
-                </a>
+                <h3 className="progress animate_3">Contact me</h3>
               </div>
             </Drawer>
           ) : (
