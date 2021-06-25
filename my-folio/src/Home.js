@@ -1,6 +1,13 @@
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { css } from "@emotion/react";
-import { Button, Container, Grid, createMuiTheme } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Grid,
+  createMuiTheme,
+  Typography,
+  Drawer,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ForwardSharpIcon from "@material-ui/icons/ForwardSharp";
@@ -12,10 +19,8 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import { Typography } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/styles";
-import Drawer from "@material-ui/core/Drawer";
 
 const axios = require("axios");
 
@@ -57,7 +62,7 @@ const Home = () => {
     },
     drawer: {
       gridArea: "drawer",
-      backgroundColor: "#2B2D42",
+      background: "none",
       width: "auto",
       height: "100%",
       display: "flex",
@@ -85,33 +90,11 @@ const Home = () => {
         gsap.registerPlugin(ScrollTrigger);
         setLoading(false);
 
-        // eslint-disable-next-line no-lone-blocks
+        //eslint-disable-next-line no-lone-blocks
         {
           window.screen.width > 577
-            ? gsap.to(".divdiv", {
-                scrollTrigger: {
-                  trigger: ".divdiv",
-                  start: "top top",
-                  pin: true,
-                  toggleActions: "restart pause reverse reset",
-                  scrub: true,
-                  ease: "power3.out",
-                  end: "bottom top",
-                },
-                x: -window.screen.width / 10,
-                duration: 5,
-                scale: 0,
-              })
-            : gsap.to(".divdiv", {
-                scrollTrigger: {
-                  trigger: ".divdiv",
-                  start: "top 10%",
-                  toggleActions: "restart pause reverse reset",
-                  scrub: true,
-                },
-                opacity: 0,
-                duration: 2,
-              });
+            ? gsap.from(".divdiv", { opacity: 0, x: -577, duration: 1.5 })
+            : gsap.from(".divdiv", { opacity: 0, y: -577, duration: 1.5 });
         }
 
         // eslint-disable-next-line
@@ -128,18 +111,26 @@ const Home = () => {
           // eslint-disable-next-line no-lone-blocks
           {
             window.screen.width > 577
-              ? gsap.to(`.project${index + 1}`, {
-                  scrollTrigger: {
-                    trigger: `.projects`,
-                    start: "top 20%",
-                    pin: true,
-                    toggleActions: "restart pause reverse reset",
-                    scrub: 1,
-                    end: "center top",
-                  },
-                  x: __x,
-                  opacity: 0,
-                })
+              ? gsap.from(
+                  `.project${index + 1}`,
+                  // {
+                  //   scrollTrigger: {
+                  //     trigger: `.project${index + 1}`,
+                  //     scrub: true,
+                  //   },
+                  //   duration: 1,
+                  //   opacity: 0,
+                  // },
+                  {
+                    scrollTrigger: {
+                      trigger: `.projects${index + 1}`,
+                      start: "top bottom",
+                      pin: true,
+                      scrub: true,
+                    },
+                    opacity: 0,
+                  }
+                )
               : gsap.from(`.project${index + 1}`, {
                   scrollTrigger: {
                     trigger: `.project${index + 1}`,
@@ -150,14 +141,7 @@ const Home = () => {
           }
           __x = 0;
         });
-        gsap.to(".drawer_one", {
-          scrollTrigger: {
-            trigger: ".first_container",
-            start: "top top",
-            end: "bottom center",
-          },
-          backgroundColor: "wheat",
-        });
+
         if (window.screen.width > 570) {
           if (document.querySelector("#github")) {
             gsap.from("#github", {
@@ -272,11 +256,11 @@ const Home = () => {
       ) : (
         <div
           className="HomeContainer"
-          style={{ display: "flex", width: "100%", backgroundColor: "#2B2D42" }}
+          style={{ display: "flex", backgroundColor: "#2B2D42" }}
         >
           <div
             className="home"
-            style={window.screen.width > 577 ? { width: "80%" } : {}}
+            style={window.screen.width > 577 ? { maxWidth: "100%" } : {}}
           >
             <section id="section1">
               <div className="first_container">
@@ -289,15 +273,19 @@ const Home = () => {
                             color: "white",
                             fontSize: "5.5vh",
                             fontFamily: "Josefin Sans, sans-serif",
+                            lineHeight: "110%",
                           }
                         : {
                             textAlign: "center",
                             color: "white",
                             fontSize: "5.5vw",
                             fontFamily: "Josefin Sans, sans-serif",
+                            lineHeight: "1.05",
                           }
                     }
                   >
+                    Welcome to
+                    <br />
                     {data.fullName}'s Portfolio
                   </h1>
                 </div>
@@ -308,11 +296,11 @@ const Home = () => {
                         window.screen.width > 577
                           ? {
                               width: "auto",
+                              height: "auto",
                             }
                           : { height: "50vh", width: "auto" }
                       }
                       src={pic}
-                      height={window.screen.height / 2.3}
                       //height="100%"
                       alt={`${data.fullName}`}
                       title={`${data.fullName}`}
@@ -344,6 +332,7 @@ const Home = () => {
                     {data.status},
                   </h2>
                   <h5
+                    className="bio"
                     style={
                       window.screen.width > 577
                         ? {
@@ -642,8 +631,7 @@ const Home = () => {
               <div
                 className="rotate drawer_two"
                 style={{
-                  height: "40%",
-                  minWidth: "100%",
+                  height: "auto",
                   color: "white",
                   backgroundColor: "#2B2D42",
                 }}
@@ -657,7 +645,7 @@ const Home = () => {
                     });
                   }}
                 >
-                  <h3 className="progress animate_2">My projects</h3>
+                  <h3 className="progress animate_2">Projects</h3>
                 </a>
               </div>
 
