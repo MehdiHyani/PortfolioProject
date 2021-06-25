@@ -22,8 +22,6 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/styles";
 
-const sanitize = require("mongo-sanitize");
-
 const axios = require("axios");
 
 const Home = () => {
@@ -403,6 +401,7 @@ const Home = () => {
                         )}
                         <Button
                           className="project_button"
+                          target="_blank"
                           href={`${project.projectLink}`}
                           style={
                             window.screen.width > 577

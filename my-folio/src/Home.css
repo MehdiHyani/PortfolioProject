@@ -208,10 +208,6 @@ max-height:100%;
     }
     .second_container, .third_container, .first_container {
       width: 100vw;
-      
-      /* border: 1px solid black;
-      border-color: aliceblue;
-      border-bottom: 2vh; */
     }
     
   .image {
