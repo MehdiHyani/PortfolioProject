@@ -1,4 +1,4 @@
-﻿# FolioProject
+# FolioProject
 
 
 <br />
