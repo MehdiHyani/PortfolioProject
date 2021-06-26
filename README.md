@@ -10,7 +10,7 @@
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#hosting">Hosting</a></li>
     <li><a href="#contact">Contact</a></li>   
   </ol>
 
@@ -20,9 +20,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <br />
-This project's overall idea is to help people "WORRY MORE ABOUT THE PROJECT, WORRY LESS ABOUT SHOWING OFF", by building a complete portfolio that contains up to 5 of your projects
-Th<br />
-dsfdf<br />
+This project's overall idea is to help people "WORRY MORE ABOUT THE PROJECT, WORRY LESS ABOUT SHOWING OFF", by building a complete portfolio that contains up to 5 of your projects.
+The <a href="https://github.com/BR4INL3SS/PortfolioProject/tree/main/build-my-folio">first directory</a> contains the website used to build the portfolio<br />
+Whereas the second one is used to view in on another independant web applications<br />
+
 
 <br />
 
@@ -45,10 +46,11 @@ And some other libraries/frameworks and dependencies like :
 
 
 
-<!-- LICENSE -->
-## License
+<!-- HOSTING -->
+## Hosting
+* buildmyfolio is hosted on : <a href="https://www.heroku.com/">Heroku</a> .
+* myfolio is hosted on : <a href="https://firebase.google.com/">Firebase</a> .
 
-Distributed under the MIT License.
 
 
 <!-- CONTACT -->
