@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 
 const axios = require("axios");
 
@@ -83,9 +84,8 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionMobile: {
     display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 }));
 
@@ -148,7 +148,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={logoutHandler}>
+      <MenuItem>
         <p>My account</p>
       </MenuItem>
       <MenuItem onClick={logoutHandler}>
@@ -182,54 +182,66 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography
-            component={"span"}
-            edge="start"
-            className={classes.title}
-            variant="h6"
-            noWrap
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              minWidth: "95%",
+            }}
           >
-            Build My Folio
-          </Typography>
-          <div className={classes.user}></div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Typography component={"span"} edge="end">
-              Welcome back,{" "}
-              {session.username ? (
-                session.username
-              ) : (
-                <Backdrop className={classes.backdrop} open>
-                  <CircularProgress color="inherit" />
-                </Backdrop>
-              )}
+            <Typography
+              component={"span"}
+              edge="start"
+              className={classes.title}
+              variant="h6"
+              noWrap
+            >
+              Build My Folio
             </Typography>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {window.screen.width > 577 ? (
+              <div className={classes.sectionDesktop}>
+                <Typography component={"span"} edge="end">
+                  Welcome back,{" "}
+                  {session.username ? (
+                    session.username
+                  ) : (
+                    <Backdrop className={classes.backdrop} open>
+                      <CircularProgress color="inherit" />
+                    </Backdrop>
+                  )}
+                </Typography>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
+            ) : (
+              <div className={classes.sectionMobile}>
+                <h2 style={{ textAlign: "center" }}>Build My Folio</h2>
+
+                <IconButton
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            )}
           </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          {renderMenu}
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
     </div>
   );
 }

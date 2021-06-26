@@ -31,7 +31,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import FileBase from "react-file-base64";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import sanitize from "mongo-sanitize";
+import QRCode from "qrcode";
 
 const axios = require("axios");
 
@@ -47,6 +47,7 @@ export default function CreatePortfolio() {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [id, setId] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({
     LinkedIn: false,
     Github: false,
@@ -146,6 +147,12 @@ export default function CreatePortfolio() {
       return;
     }
 
+    if (error !== "") {
+      setError("Unresolved issues");
+      setOpen(true);
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         "/api/createportfolio/create",
@@ -154,7 +161,19 @@ export default function CreatePortfolio() {
       );
 
       setId(data.id);
-      setCopy({ value: `my.portfolio.com/${id}`, copied: false });
+      setCopy({
+        value: `https://myfolio365.firebaseapp.com/view/${id}`,
+        copied: false,
+      });
+      try {
+        const response = await QRCode.toDataURL(
+          `https://myfolio365.firebaseapp.com/view/${data.id}`
+        );
+        setImageUrl(response);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
       handleNext();
     } catch (error) {
       console.log(error.message);
@@ -360,7 +379,7 @@ export default function CreatePortfolio() {
                     }}
                   />
                   <TextField
-                    inputProps={{ maxLength: 1000, minLength: 600 }}
+                    inputProps={{ maxLength: 1000 }}
                     variant="outlined"
                     name="Bio"
                     label="Bio"
@@ -394,12 +413,21 @@ export default function CreatePortfolio() {
               style={{ marginTop: "50px" }}
             >
               <div
-                style={{
-                  minWidth: "80%",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
+                style={
+                  window.screen.width > 577
+                    ? {
+                        minWidth: "80%",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }
+                    : {
+                        minWidth: "80%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }
+                }
               >
                 <h3 style={{ marginRight: "80px" }}>Profile picture :</h3>
                 <FileBase
@@ -576,7 +604,9 @@ export default function CreatePortfolio() {
               elevation={4}
               style={{ marginTop: "50px" }}
             >
-              <h1 title="Up to 5 projects">Add up to 5 of your projects</h1>
+              <h1 style={{ textAlign: "center" }} title="Up to 5 projects">
+                Add up to 5 of your projects
+              </h1>
               <form
                 className={classes2.root}
                 onSubmit={(e) => e.preventDefault}
@@ -655,14 +685,27 @@ export default function CreatePortfolio() {
         return (
           <Container component="main" maxWidth="md">
             <Paper className={classes2.paper} elevation={3}>
-              <a href={`my.portfolio.com/${id}`}>
-                <h1
-                  style={{ fontFamily: "serif" }}
-                >{`my.portfolio.com/${id}`}</h1>
+              <a href={`https://myfolio365.firebaseapp.com/view/${id}`}>
+                <h1 style={{ fontFamily: "serif" }}>Go to your Portfolio</h1>
               </a>
               <br></br>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {imageUrl ? (
+                  <a href={imageUrl} download>
+                    <img src={imageUrl} alt="QR" />
+                  </a>
+                ) : null}
+              </div>
+
               <CopyToClipboard
-                text={`my.portfolio.com/${id}`}
+                text={`https://myfolio365.firebaseapp.com/view/${id}`}
                 onCopy={() => setCopy({ copied: true })}
               >
                 <Button variant="contained" color="green">
@@ -681,7 +724,21 @@ export default function CreatePortfolio() {
     <div className="wrapper">
       <div
         className="one"
-        style={{ width: "75%", margin: "auto", marginTop: "30px" }}
+        style={
+          window.screen.width > 577
+            ? {
+                width: "75%",
+                margin: "auto",
+                marginTop: "30px",
+                backgroundColor: "white",
+              }
+            : {
+                width: "85vw",
+                margin: "auto",
+                marginTop: "30px",
+                backgroundColor: "white",
+              }
+        }
       >
         <Stepper
           alternativeLabel
