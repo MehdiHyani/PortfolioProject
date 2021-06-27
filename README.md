@@ -67,12 +67,11 @@ Project Link: https://buildmyfolio.herokuapp.com
 
 in this section I will provide you with some tools to test my project without going through the process:
 
-*[login](https://buildmyfolio.herokuapp.com/login) credentials :
+----> [login](https://buildmyfolio.herokuapp.com/login) credentials :
 email: testuser1332@test.com
 password: testuser1332
 
-
-*[viewing](https://myfolio365.firebaseapp.com/view/60d75228486eea0015acdb72)
+----> My own [portfolio](https://myfolio365.firebaseapp.com/view/60d75228486eea0015acdb72)
 
 
 
