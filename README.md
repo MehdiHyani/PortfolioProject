@@ -11,7 +11,8 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#hosting">Hosting</a></li>
-    <li><a href="#contact">Contact</a></li>   
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#testing">Testing</a></li>
   </ol>
 
 
@@ -58,8 +59,20 @@ And some other libraries/frameworks and dependencies like :
 
 Mehdi Hyani - [@MehdiHyani](https://twitter.com/MehdiHyani) - [email](https://mail.google.com/mail/?view=cm&fs=1&to=hyanimehdi115@gmail.com)
 
-Project Link: https://buildmyfolio.herokuapp.com/login
+Project Link: https://buildmyfolio.herokuapp.com
 
+
+<!-- TESTING -->
+## Testing
+
+in this section I will provide you with some tools to test my project without going through the process:
+
+*[login](https://buildmyfolio.herokuapp.com/login) credentials :
+email: testuser1332@test.com
+password: testuser1332
+
+
+*[viewing](https://myfolio365.firebaseapp.com/view/60d75228486eea0015acdb72)
 
 
 
