@@ -47,13 +47,6 @@ And some other libraries/frameworks and dependencies like :
 
 
 
-<!-- HOSTING -->
-## Hosting
-* buildmyfolio is hosted on : <a href="https://www.heroku.com/">Heroku</a> .
-* myfolio is hosted on : <a href="https://firebase.google.com/">Firebase</a> .
-
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -62,16 +55,7 @@ Mehdi Hyani - [@MehdiHyani](https://twitter.com/MehdiHyani) - [email](https://ma
 Project Link: https://buildmyfolio.herokuapp.com
 
 
-<!-- TESTING -->
-## Testing
 
-in this section I will provide you with some tools to test my project without going through the process:
-
-----> [login](https://buildmyfolio.herokuapp.com/login) credentials :
-email: testuser1332@test.com
-password: testuser1332
-
-----> My own [portfolio](https://myfolio365.firebaseapp.com/view/60d75228486eea0015acdb72)
 
 
 
